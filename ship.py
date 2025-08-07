@@ -17,12 +17,17 @@ class Ship:
         self.image = pygame.transform.scale(self.image, (self.settings.ship_w, self.settings.ship_h))
 
         self.rect = self.image.get_rect()
+        self._center_ship()
         self.rect.midbottom = self.boundaries.midbottom
         self.moving_right = False
         self.moving_left = False
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
         self.arsenal = arsenal
+
+    def _center_ship(self) -> None:
+        self.rect.midbottom = self.boundaries.midbottom
+        self.x = float(self.rect.x)
 
     def update(self):
         # Updating position of ship
