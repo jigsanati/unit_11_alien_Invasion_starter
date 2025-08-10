@@ -1,5 +1,5 @@
 import pygame
-from alien_fleet import Alien
+from alien import Alien
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
@@ -14,12 +14,15 @@ class AlienFleet:
         alien = Alien(self, 0, 0)
         alien_width, alien_height = alien.rect.size
 
-        # Spawn aliens in right half of screen
+        # aliens in right half of screen
         available_space_x = self.settings.screen_width // 2
+
         number_aliens_x = available_space_x // (2 * alien_width)
 
         available_space_y = (self.settings.screen_height - 3 * alien_height) // 2
-        number_rows = available_space_y // (2 * alien_height)
+
+
+        number_rows = available_space_y // (alien_height)
 
         for row in range(number_rows):
             for alien_number in range(number_aliens_x):
@@ -61,7 +64,10 @@ class AlienFleet:
         return pygame.sprite.groupcollide(self.fleet, bullets, True, True)
 
     def check_destroyed_status(self):
-        return len(self.fleet) == 0
+        if not self.fleet:
+            return True
+        return False
+
 
     def draw(self):
         for alien in self.fleet:

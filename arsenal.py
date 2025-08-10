@@ -1,40 +1,33 @@
 import pygame
+from alien import Alien
+
 from typing import TYPE_CHECKING
-from bullet import Bullet
-
+from bullet import Bullets
 if TYPE_CHECKING:
-    from alien_invasion import AlienInvasion
-
-
+      from alien_invasion import AlienInvasion
 
 class Arsenal:
-
-    def __init__(self, game: 'AlienInvasion'):
+    def __init__(self, game: 'AlienInvasion') -> None:
         self.game = game
         self.settings = game.settings
-        self.arsenal = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
+
+    def fire_bullet(self):
+        if len(self.bullets) < self.settings.bullets_allowed:
+            bullet = Bullets(self.game)
+            self.bullets.add(bullet)
+            return True
+        return False
 
     def update_arsenal(self):
-        self.arsenal.update()
-        self._remove_bullets_offscreen()
-
-    def _remove_bullets_offscreen(self):
-        for bullet in self.arsenal.copy():
-            if bullet.rect.bottom <= 0:
-                self.arsenal.remove(bullet)
-
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+            if bullet.rect.left > self.settings.screen_width:
+                self.bullets.remove(bullet)
 
     def draw(self):
-        for bullet in self.arsenal:
+        for bullet in self.bullets:
             bullet.draw_bullet()
-    
-    def fire_bullet(self):
-        if len(self.arsenal) < self.settings.bullet_amount:
-            new_bullet = Bullet(self.game)
-            self.arsenal.add(new_bullet)
-            return True
-        else:
-            return False
         
 
 
