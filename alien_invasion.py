@@ -2,11 +2,11 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
-from game_stats import GameStats
+from game_status import GameStats
 from arsenal import Arsenal
 from alien_fleet import AlienFleet
 from time import sleep
-from buttons import Buttons
+from button import Buttons
 from hud import HUD
 
 
